@@ -79,6 +79,9 @@ int main(int argc, char *argv[])
 	}
 
 	log_init();
+	/* Catch early errors */
+	log_link(LOGLVL_ERROR, LOGOUTPUT_CONSOLE);
+	log_link(LOGLVL_WARNING, LOGOUTPUT_CONSOLE);
 
 	global.conf_file = g_strdup(CONF_FILE_DEF);
 	global.conf = conf_load(argc, argv);
@@ -155,15 +158,19 @@ int main(int argc, char *argv[])
 		pw = getpwnam(global.conf->user);
 		if (!pw) {
 			log_message(LOGLVL_ERROR, "Failed to look up user %s.", global.conf->user);
+			return(EXIT_FAILURE);
 
 		} else if (initgroups(global.conf->user, pw->pw_gid) != 0) {
 			log_message(LOGLVL_ERROR, "initgroups: %s.", strerror(errno));
+			return(EXIT_FAILURE);
 
 		} else if (setgid(pw->pw_gid) != 0) {
 			log_message(LOGLVL_ERROR, "setgid(%d): %s.", pw->pw_gid, strerror(errno));
+			return(EXIT_FAILURE);
 
 		} else if (setuid(pw->pw_uid) != 0) {
 			log_message(LOGLVL_ERROR, "setuid(%d): %s.", pw->pw_uid, strerror(errno));
+			return(EXIT_FAILURE);
 		}
 	}
 

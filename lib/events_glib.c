@@ -50,18 +50,24 @@ static GMainLoop *loop = NULL;
 void b_main_init()
 {
 	if (loop == NULL) {
-		loop = g_main_new(FALSE);
+		loop = g_main_loop_new(NULL, FALSE);
 	}
 }
 
 void b_main_run()
 {
-	g_main_run(loop);
+	g_main_loop_run(loop);
 }
 
 void b_main_quit()
 {
-	g_main_quit(loop);
+	g_main_loop_quit(loop);
+}
+
+void b_main_iteration()
+{
+	g_main_context_iteration(NULL, FALSE);
+	event_debug("b_main_iteration()\n");
 }
 
 static gboolean gaim_io_invoke(GIOChannel *source, GIOCondition condition, gpointer data)

@@ -92,9 +92,9 @@ binary-common:
 	dh_testdir
 	dh_testroot
 
-	dh_installchangelogs doc/CHANGES
 	dh_installexamples
 	dh_installdocs --link-doc=bitlbee-common
+	dh_installchangelogs doc/CHANGES
 	dh_installdebconf
 ifeq ($(HAS_DH_SYSTEMD),1)
 	dh_systemd_enable -p bitlbee-common --no-enable bitlbee.socket
@@ -123,4 +123,6 @@ binary-%: build install
 	DH_OPTIONS=-p$* $(MAKE) -f debian/rules binary-common
 
 binary: binary-arch
-.PHONY: build clean binary-arch binary-common binary install
+.PHONY: build clean binary-arch binary-common binary install build-indep
+
+build-indep:

@@ -1,20 +1,77 @@
-bitlbee (3.5.1-1.1) UNRELEASED; urgency=medium
+bitlbee (3.6-2) UNRELEASED; urgency=medium
+
+  [ Debian Janitor ]
+  * Depend on newer debhelper (>= 9.20160709) rather than dh-systemd.
+
+  [ dequis ]
+  * Some more d/copyright fixups (Closes: #883872)
+
+  [ Jelmer Vernooĳ ]
+  * Use secure URI in debian/watch.
+  * Use secure URI in Homepage field.
+  * Add missing colon in closes line.
+  * Remove obsolete fields Name from debian/upstream/metadata.
+  * Fix day-of-week for changelog entries 0.81a-1.
+  * Set debhelper version back to 9, for easier backport building.
+
+  [ Debian Janitor ]
+  * Upgrade to newer source format.
+
+  [ Jelmer Vernooĳ ]
+  * Set upstream metadata fields: Repository.
+  * Use canonical URL in Vcs-Git.
+  * Add missing debian/rules target build-indep.
+  * Use python3 since python2 is being removed. Closes: #942954
+  * Use system libjsonparser rather than bundled one.
+
+ -- Debian Janitor <janitor@jelmer.uk>  Thu, 21 Mar 2019 00:10:27 +0000
+
+bitlbee (3.6-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Apply patch to d/copyright provided by Jochen Sprickerhof
+    Closes: #883872
+
+ -- Andreas Tille <tille@debian.org>  Thu, 18 Apr 2019 21:27:48 +0200
+
+bitlbee (3.6-1) unstable; urgency=medium
 
   [ dequis ]
   * Remove bitlbee-plugin-skype and skyped (obsolete)
   * Enable only bitlbee.service, not bitlbee.socket too
 
-  [ Sean Whitton ]
-  * Add existence check to chmod call in bitlbee-common.postinst
-    (Closes: #816200).
-
   [ dequis ]
-  * Fix lintian pkg-config-unavailable-for-cross-compilation 
+  * Fix lintian pkg-config-unavailable-for-cross-compilation
 
   [ Jelmer Vernooĳ ]
   * Add debian upstream metadata file.
+  * Trim trailing whitespace.
 
- -- dequis <dx@dxzone.com.ar>  Mon, 19 Mar 2018 22:18:43 -0300
+  [ Debian Janitor ]
+  * Bump debhelper from old 9 to 10.
+  * Trim trailing whitespace.
+
+ -- Wilmer van der Gaast <wilmer@gaast.net>  Sat, 02 Mar 2019 22:18:21 +0000
+
+bitlbee (3.5.1-1.2) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Comment out bitlbee-plugin-skype and skyped in d/control (Closes: #921895).
+    These binary packages are not built by d/rules by default, and as such
+    they are not currently in the archive.  Commenting them out in order
+    to avoid my NMU hitting binNEW; this caused the -1.1 source-only
+    upload to fail.
+    Thank you to Mattia Rizzolo for suggesting this fix.
+
+ -- Sean Whitton <spwhitton@spwhitton.name>  Sat, 09 Feb 2019 17:03:38 -0700
+
+bitlbee (3.5.1-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Add existence check to chmod call in bitlbee-common.postinst
+    (Closes: #816200).
+
+ -- Sean Whitton <spwhitton@spwhitton.name>  Fri, 25 Jan 2019 16:50:34 -0700
 
 bitlbee (3.5.1-1) unstable; urgency=medium
 
@@ -230,7 +287,7 @@ bitlbee (3.0.3-1) unstable; urgency=low
 bitlbee (3.0.1-1) unstable; urgency=low
 
   * New upstream release.
-  * Includes changes from non-maintainer, see below. (Closes #603681)
+  * Includes changes from non-maintainer, see below. (Closes: #603681)
 
  -- Wilmer van der Gaast <wilmer@gaast.net>  Sat, 04 Dec 2010 11:50:53 +0000
 
@@ -662,7 +719,7 @@ bitlbee (0.81a-1) unstable; urgency=low
 
   * New upstream release.
 
- -- Wilmer van der Gaast <lintux@debian.org>  Wed, 16 Oct 2003 16:21:31 +0200
+ -- Wilmer van der Gaast <lintux@debian.org>  Thu, 16 Oct 2003 16:21:31 +0200
 
 bitlbee (0.81-1) unstable; urgency=low
 
@@ -741,4 +798,3 @@ bitlbee (0.6-1) unstable; urgency=low
   * Initial Release. (Testing only, not for release.)
 
  -- Wilmer van der Gaast <lintux@debian.org>  Wed, 10 Jul 2002 11:02:28 +0200
-

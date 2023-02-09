@@ -42,6 +42,7 @@ conf_t *conf_load(int argc, char *argv[])
 {
 	conf_t *conf;
 	int opt, i, config_missing = 0;
+	int version_happened = 0;
 
 	conf = g_new0(conf_t, 1);
 
@@ -143,14 +144,20 @@ conf_t *conf_load(int argc, char *argv[])
 			conf_free(conf);
 			return NULL;
 		} else if (opt == 'V') {
-			printf("BitlBee %s\nAPI version %06x\nConfigure args: %s\n",
-			       BITLBEE_VERSION, BITLBEE_VERSION_CODE, BITLBEE_CONFIGURE_ARGS);
-			conf_free(conf);
-			return NULL;
+			printf("BitlBee %s\n", BITLBEE_VERSION);
+			/* the rest of the version string is displayed below, for ld -vvv compatibility*/
+			version_happened = TRUE;
 		} else if (opt == 'u') {
 			g_free(conf->user);
 			conf->user = g_strdup(optarg);
 		}
+	}
+
+	if (version_happened) {
+		printf("API version %06x\nConfigure args: %s\n",
+		       BITLBEE_VERSION_CODE, BITLBEE_CONFIGURE_ARGS);
+		conf_free(conf);
+		return NULL;
 	}
 
 	if (conf->configdir[strlen(conf->configdir) - 1] != '/') {
@@ -278,10 +285,12 @@ static int conf_loadini(conf_t *conf, char *file)
 			} else if (g_strcasecmp(ini->key, "motdfile") == 0) {
 				g_free(conf->motdfile);
 				conf->motdfile = g_strdup(ini->value);
-			} else if (g_strcasecmp(ini->key, "account_storage") == 0) {
+			} else if (g_strcasecmp(ini->key, "accountstorage") == 0 ||
+				   g_strcasecmp(ini->key, "account_storage") == 0) {
 				g_free(conf->primary_storage);
 				conf->primary_storage = g_strdup(ini->value);
-			} else if (g_strcasecmp(ini->key, "account_storage_migrate") == 0) {
+			} else if (g_strcasecmp(ini->key, "accountstoragemigrate") == 0 ||
+				   g_strcasecmp(ini->key, "account_storage_migrate") == 0) {
 				g_strfreev(conf->migrate_storage);
 				conf->migrate_storage = g_strsplit_set(ini->value, " \t,;", -1);
 			} else if (g_strcasecmp(ini->key, "pinginterval") == 0) {
